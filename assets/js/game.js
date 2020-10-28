@@ -38,7 +38,10 @@ playerMoney = 10;
 
       enemyHealth = 50;
 
-      //fight(pickedEnemyName);//
+      fight(pickedEnemyName);
+
+      if (i < enemyNames.length - 1) {
+        shop();
     }
     else {
       window.alert("You have lost your robot in battle! Game Over!");
@@ -46,8 +49,9 @@ playerMoney = 10;
     }
   }
 endGame();
+shop();
 };
-  
+
 
  // function to end the entire game
 var endGame = function() {
@@ -69,8 +73,64 @@ if (playAgainConfirm) {
 else {
   window.alert("Thank you for playing Robot Gladiators! Come back soon!");
   }
-};
 
+  if (playerHealth > 0 && i < enemyNames.length - 1) {
+    // ask if player wants to use the store before next round
+    var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+  
+    // if yes, take them to the store() function
+    if (storeConfirm) {
+      shop();
+    }
+  }
+
+var shop = function() {
+  //ask a player what they'd like to do
+  var shopOptionPrompt = window.prompt(
+    "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+      );
+    
+    // use switch to carry out action
+switch (shopOptionPrompt) {
+  case "REFILL": // new case
+  case "refill":
+    if (playerMoney >= 7) {
+      window.alert("Refilling player's health by 20 for 7 dollars.");
+
+      playerHealth = playerHealth + 20;
+      playerMoney = playerMoney - 7;
+    }
+    else {
+      window.alert("You don't have enough money!");
+    }
+
+    break;
+  case "UPGRADE": // new case
+  case "upgrade":
+    if (playerMoney >= 7) {
+      window.alert("Upgrading player's attack by 6 for 7 dollars.");
+
+      playerAttack = playerAttack + 6;
+      playerMoney = playerMoney - 7;
+    }
+    else {
+      window.alert("You don't have enough money!");
+    }
+
+    break;
+  case "LEAVE": // new case
+  case "leave":
+    window.alert("Leaving the store.");
+    break;
+  default:
+    window.alert("You did not pick a valid option. Try again.");
+    shop();
+    break;
+}
+
+    };
+  }
+}
 
 var fight = function(enemyName) {
 
@@ -87,7 +147,7 @@ var fight = function(enemyName) {
         // subtract money from playerMoney for skipping
         playerMoney = playerMoney - 10;
         console.log("playerMoney", playerMoney)
-        //break;//
+        //break;
       }
     }
 
@@ -105,8 +165,10 @@ var fight = function(enemyName) {
       playerMoney = playerMoney + 20;
 
       // leave while() loop since enemy is dead
-      //break;//
-    } else {
+      //break;
+    } 
+    
+    else {
       window.alert(enemyName + ' still has ' + enemyHealth + ' health left.');
     }
 
@@ -120,8 +182,10 @@ var fight = function(enemyName) {
     if (playerHealth <= 0) {
       window.alert(playerName + ' has died!');
       // leave while() loop if player is dead
-      //break;//
-    } else {
+      //break;
+    } 
+    
+    else {
       window.alert(playerName + ' still has ' + playerHealth + ' health left.');
     }
   }
@@ -131,6 +195,7 @@ for(var i = 0; i < enemyNames.length; i++) {
   var pickedEnemyName = enemyNames[i];
   enemyHealth = 50;
   fight(pickedEnemyName);
-}
+  }
 
+shop();
 startGame();
